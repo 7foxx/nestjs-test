@@ -7,10 +7,12 @@ export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
   @Post('img')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file')) // 接受的字段名称
   upload(@UploadedFile() file) {
-    console.log(file)
+    console.log(file, 'file')
 
-    return '11'
+    return {
+      status: 200,
+    }
   }
 }

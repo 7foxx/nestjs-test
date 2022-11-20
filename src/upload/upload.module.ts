@@ -12,8 +12,6 @@ import { extname, join } from 'path'
         // 设置存放路径
         destination: join(__dirname, '../images'),
         filename(req, file, callback) {
-          console.log(file)
-
           const FileName = `${new Date().getTime()} ${extname(
             file.originalname,
           )}`
