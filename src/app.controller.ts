@@ -1,6 +1,6 @@
-import { Controller, Get, Inject } from '@nestjs/common';
-import { AppService } from './app.service';
-import { UserService } from './user/user.service';
+import { Controller, Get, Inject } from '@nestjs/common'
+import { AppService } from './app.service'
+import { UserService } from './user/user.service'
 
 @Controller('/')
 export class AppController {
@@ -12,11 +12,11 @@ export class AppController {
 
   @Get('index')
   getHello(): string {
-    return this.userService.findAll();
+    return this.userService.findAll()
   }
 
   @Get('glo')
   getGlobal() {
-    return this.Config;
+    return this.Config
   }
 }

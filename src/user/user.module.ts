@@ -4,11 +4,11 @@ import {
   Module,
   NestModule,
   Provider,
-} from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { TestController } from '../test/test.controller';
-import { MiddlewareMiddleware } from 'src/middleware/middleware.middleware';
+} from '@nestjs/common'
+import { UserService } from './user.service'
+import { UserController } from './user.controller'
+import { TestController } from '../test/test.controller'
+// import { MiddlewareMiddleware } from 'src/middleware/middleware.middleware'
 
 const UserProviders: Provider[] = [
   {
@@ -26,13 +26,13 @@ const UserProviders: Provider[] = [
     async useFactory(TestController: TestController) {
       return await new Promise((r) => {
         setTimeout(() => {
-          console.log(TestController, 'gongchang');
-          r('success');
-        }, 2000);
-      });
+          console.log(TestController, 'gongchang')
+          r('success')
+        }, 2000)
+      })
     },
   },
-];
+]
 
 @Global()
 @Module({
@@ -40,9 +40,10 @@ const UserProviders: Provider[] = [
   providers: [...UserProviders],
   exports: [...UserProviders],
 })
-export class UserModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    // 局部注入拦截 user 路由
-    consumer.apply(MiddlewareMiddleware).forRoutes('user');
-  }
-}
+// export class UserModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     // 局部注入拦截 user 路由
+//     consumer.apply(MiddlewareMiddleware).forRoutes('user')
+//   }
+// }
+export class UserModule {}
