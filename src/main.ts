@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express'
 import * as cors from 'cors'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path'
+import { HttpFilter, ResponseSuccess } from './common/response'
 
 const MiddlewareConfig = (req: Request, res: Response, next: NextFunction) => {
   const { body } = req
@@ -31,6 +32,13 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/imgesall',
   })
+
+  // 响应拦截器
+  app.useGlobalInterceptors(new ResponseSuccess())
+
+  // 异常拦截器
+  app.useGlobalFilters(new HttpFilter())
+
   await app.listen(3000)
 }
 bootstrap()
