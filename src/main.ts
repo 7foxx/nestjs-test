@@ -6,6 +6,7 @@ import * as cors from 'cors'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path'
 import { HttpFilter, ResponseSuccess } from './common/response'
+import { ValidationPipe } from '@nestjs/common'
 
 const MiddlewareConfig = (req: Request, res: Response, next: NextFunction) => {
   const { body } = req
@@ -37,7 +38,10 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseSuccess())
 
   // 异常拦截器
-  app.useGlobalFilters(new HttpFilter())
+  // app.useGlobalFilters(new HttpFilter())
+
+  // 全局管道验证DTO
+  app.useGlobalPipes(new ValidationPipe())
 
   await app.listen(3000)
 }

@@ -11,10 +11,14 @@ import {
   Res,
   Session,
   Inject,
+  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/update-user.dto'
 import * as svgCaptcha from 'svg-captcha'
+import { UserPipe } from './user.pipe'
+import { CreateUserDto } from './dto/create-user.dto'
 
 @Controller('user')
 export class UserController {
@@ -60,13 +64,14 @@ export class UserController {
   }
 
   @Post('body')
-  findPost(@Body() body) {
-    console.log(body)
+  findPost(@Body() body: CreateUserDto) {
     return this.userService.findAll()
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    console.log(typeof id, '===============')
+
     return this.userService.findOne(+id)
   }
 
