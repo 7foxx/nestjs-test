@@ -7,6 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path'
 import { HttpFilter, ResponseSuccess } from './common/response'
 import { ValidationPipe } from '@nestjs/common'
+import { UserGuard } from './user/user.guard'
 
 const MiddlewareConfig = (req: Request, res: Response, next: NextFunction) => {
   const { body } = req
@@ -42,6 +43,9 @@ async function bootstrap() {
 
   // 全局管道验证DTO
   app.useGlobalPipes(new ValidationPipe())
+
+  // 注册全局守卫
+  // app.useGlobalGuards(new UserGuard())
 
   await app.listen(3000)
 }

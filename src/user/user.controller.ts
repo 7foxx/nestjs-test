@@ -13,14 +13,19 @@ import {
   Inject,
   ParseIntPipe,
   ParseUUIDPipe,
+  UseGuards,
+  SetMetadata,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/update-user.dto'
 import * as svgCaptcha from 'svg-captcha'
 import { UserPipe } from './user.pipe'
 import { CreateUserDto } from './dto/create-user.dto'
+import { UserGuard } from './user.guard'
+import { ReqUrl, Roles } from 'src/roles/roles.decorator'
 
 @Controller('user')
+@UseGuards(UserGuard)
 export class UserController {
   constructor(
     @Inject('Users') private readonly userService: UserService,
@@ -58,8 +63,12 @@ export class UserController {
   }
 
   @Get('query')
-  findAll(@Query() query) {
+  // @SetMetadata('role', ['admin'])
+  @Roles('admin')
+  findAll(@Query() query, @ReqUrl() url) {
     console.log(query)
+    console.log(url)
+
     return this.userService.findAll() + this.gongchang
   }
 
