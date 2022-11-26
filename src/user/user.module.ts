@@ -8,6 +8,8 @@ import {
 import { UserService } from './user.service'
 import { UserController } from './user.controller'
 import { TestController } from '../test/test.controller'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { User } from './entities/user.entity'
 // import { MiddlewareMiddleware } from 'src/middleware/middleware.middleware'
 
 const UserProviders: Provider[] = [
@@ -36,14 +38,15 @@ const UserProviders: Provider[] = [
 
 @Global()
 @Module({
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [...UserProviders],
   exports: [...UserProviders],
 })
+export class UserModule {}
 // export class UserModule implements NestModule {
 //   configure(consumer: MiddlewareConsumer) {
 //     // 局部注入拦截 user 路由
 //     consumer.apply(MiddlewareMiddleware).forRoutes('user')
 //   }
 // }
-export class UserModule {}
